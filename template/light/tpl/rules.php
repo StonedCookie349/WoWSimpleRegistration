@@ -1,21 +1,25 @@
 <?php
-/**
- * Created by Amin.MasterkinG
- * Website : MasterkinG32.CoM
- * Email : lichwow_masterking@yahoo.com
- * Date: 11/26/2018 - 8:36 PM
- */
 ?>
-
-<p>
-    <?php elang('read_before_register'); ?>
-</p>
+<center>
+<h4>
+<strong>Server Rules</strong>
+</h4>
+</center>
+<ul style="line-height:2.5;margin:0">
 <ul>
-    <li><?php elang('rule'); ?> 1.</li>
-    <li><?php elang('rule'); ?> 2.</li>
-    <li><?php elang('rule'); ?> 3.</li>
-    <li><?php elang('rule'); ?> 4.</li>
-    <li><?php elang('rule'); ?> 5.</li>
-    <li><?php elang('rule'); ?> 6.</li>
-    <li><?php elang('edit_on'); ?> <b>"/template/<?php echo $antiXss->xss_clean(get_config("template")); ?>/tpl/rules.php"</b>.</li>
+    <li><?php elang('rule'); ?> 1. Threats of hacking or DDoSing the servers will result in an immediate ban.</li>
+
+    <li><?php elang('rule'); ?> 2. Discrimination of one's race, religion, sexual orientation, etc. will not be tolerated.</li>
+
+    <li><?php elang('rule'); ?> 3. Treat the server as you would retail WoW.</li>
+
+    <li><?php elang('rule'); ?> 4. No promotion of other servers, discords, etc.</li>
+
+    <li><?php elang('rule'); ?> 5. No age restricted or obscene content.</li>
+
+    <li><?php elang('rule'); ?> 6. Keep all character/guild names appropriate.</li>
+
+    <li><?php elang('rule'); ?> 7. Respect all staff members.</li>
+
+    <li><?php elang('rule'); ?> 8. A Game Master's decision is final.</li>
 </ul>

@@ -1,19 +1,15 @@
 <?php
-/**
- * Created by Amin.MasterkinG
- * Website : MasterkinG32.CoM
- * Email : lichwow_masterking@yahoo.com
- * Date: 11/26/2018 - 8:36 PM
- */
 require_once 'header.php'; ?>
 <div class="row">
     <div class="main-box">
-        <img src="<?php echo $antiXss->xss_clean(get_config("baseurl")); ?>/template/<?php echo $antiXss->xss_clean(get_config("template")); ?>/images/wow-logo.png">
+        <img src="<?php echo $antiXss->xss_clean(get_config("baseurl")); ?>/template/<?php echo $antiXss->xss_clean(get_config("template")); ?>/images/wow-logo.png" width="400" height="200">
+        <h1>Welcome to Panda Express</h1>
+        <h3>Serving Azeroth Since 2023</h3>
         <div class="col-xs-12" style="margin-top: 20px;">
             <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="nav-register-tab" data-toggle="tab" href="#nav-register"
-                       role="tab" aria-controls="nav-register" aria-selected="true"><?php elang('register'); ?></a>
+                       role="tab" aria-controls="nav-register" aria-selected="true">Home</a>
                     <?php if (!get_config('disable_online_players')) { ?>
                         <a class="nav-item nav-link" id="nav-serverstatus-tab" data-toggle="tab"
                            href="#nav-serverstatus" role="tab" aria-controls="nav-serverstatus" aria-selected="false"><?php elang('server_status'); ?></a>
@@ -37,6 +33,7 @@ require_once 'header.php'; ?>
                      aria-labelledby="nav-register-tab">
                     <div class="row">
                         <div class="col-md-6">
+                    </h2><strong>Create an Account</strong></h2>
                             <form action="" method="post">
                                 <div style="padding: 10px;">
                                     <?php error_msg();
@@ -67,25 +64,20 @@ require_once 'header.php'; ?>
                                     <div class="text-center" style="margin-top: 10px;"><input type="submit"
                                                                                               class="btn btn-danger"
                                                                                               value="<?php elang('register'); ?>"></div>
+                                                                                              <div class="text-center">
+                                    <?php if (empty(get_config('disable_changepassword'))) { ?>
+                                    <?php } ?>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                            data-target="#restorepassword-modal">
+                                        Forgot Password
+                                    </button>
+                                </div>
                                 </div>
                             </form>
                         </div>
                         <div class="col-md-6">
                             <div class="content_box1">
                                 <?php require_once base_path . 'template/' . get_config('template') . '/tpl/rules.php'; ?>
-                                <hr>
-                                <div class="text-center">
-                                    <?php if (empty(get_config('disable_changepassword'))) { ?>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#changepassword-modal">
-                                            <?php elang('change_password'); ?>
-                                        </button>
-                                    <?php } ?>
-                                    <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#restorepassword-modal">
-                                        <?php elang('restore_password'); ?>
-                                    </button>
-                                </div>
                                 <?php if (get_config('2fa_support')) { ?>
                                     <div class="text-center" data-aos="fade-up" data-aos-delay="100" style="margin-top: 5px;">
                                         <button type="button" class="btn btn-secondary" data-toggle="modal"
@@ -291,6 +283,42 @@ require_once 'header.php'; ?>
                                         </div>
                                     </div>
                                 </div>
+                                <?php if(!empty(get_config('supported_langs'))) { ?>
+                                <!-- Language Modal -->
+                                <div class="modal" id="lang-modal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><?php elang('change_lang_head'); ?></h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <form action="" method="post">
+                                                    <div class="form-group">
+                                                        <label for="lang"><?php elang('change_lang_form_head'); ?></label>
+                                                        <select class="form-control" id="langchange" name="langchange">
+                                                            <?php
+                                                                $supported_langs = get_config('supported_langs');
+                                                                foreach($supported_langs as $val => $lang) {
+                                                                    echo '<option value="' . $val . '">' . $lang . '</option>';
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                    <input name="langchangever" type="hidden" value="langchanger">
+                                                    <button type="submit" class="btn btn-primary"><?php elang('change_lang_sub'); ?></button>
+                                                </form>
+                                            </div>
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -298,9 +326,10 @@ require_once 'header.php'; ?>
                 <?php if (!get_config('disable_online_players')) { ?>
                     <div class="tab-pane fade" id="nav-serverstatus" role="tabpanel"
                          aria-labelledby="nav-serverstatus-tab">
+                         <div class="container" style="display: flex; justify-content: flex-start; width: 100%">
                         <?php
                         foreach (get_config('realmlists') as $onerealm_key => $onerealm) {
-                            echo "<p><span style='color: #005cbf;font-weight: bold;'>{$onerealm['realmname']}</span> <span style='font-size: 12px;'>(" . lang('online_players_msg1') . " " . user::get_online_players_count($onerealm['realmid']) . ")</span></p><hr>";
+                            echo "<p><span style='color: #005cbf;font-weight: bold;'>{$onerealm['realmname']}</span> <span style='font-size: 12px;'>(" . lang('online_players_msg1') . " " . user::get_online_players_count($onerealm['realmid']) . ")</span></p>";
                             $online_chars = user::get_online_players($onerealm['realmid']);
                             if (!is_array($online_chars)) {
                                 echo "<span style='color: #0d99e5;'>" . lang('online_players_msg2') . "</span>";
@@ -311,17 +340,22 @@ require_once 'header.php'; ?>
                                 }
                                 echo '</table>';
                             }
-                            echo "<hr>";
                         }
                         ?>
+
+                    <div class="widget-container" style="display: flex; justify-content: flex-end; width: 100%">
+                    <iframe src="https://stonedcookiegaming.github.io/Commits-Widget/?username=TrinityCore&repo=TrinityCore&branch=master&limit=15" allowtransparency="true" frameborder="0" scrolling="no" width="502px" height="252px"></iframe>
+                </div>
                     </div>
+                    </div>
+
                 <?php }
                 if (!get_config('disable_top_players')) { ?>
                     <div class="tab-pane fade" id="nav-topplayers" role="tabpanel" aria-labelledby="nav-topplayers-tab">
                         <?php
                         $i = 1;
                         foreach (get_config('realmlists') as $onerealm_key => $onerealm) {
-                            echo "<h6 style='color: #005cbf;font-weight: bold;'>{$onerealm['realmname']}</h6><hr>";
+                            echo "<h6 style='color: #005cbf;font-weight: bold;'>{$onerealm['realmname']}</h6>";
                             $data2show = status::get_top_playtime($onerealm['realmid']);
                             echo "<button type=\"button\" class=\"btn btn-info\" data-toggle=\"modal\"  data-aos=\"fade-up\" data-aos-delay=\"100\"data-target=\"#modal-id$i\">" . lang('play_time') . "</button><div class=\"modal\" id=\"modal-id$i\"><div class=\"modal-dialog modal-lg\"><div class=\"modal-content\">
                                             <div class=\"modal-header\"><h4 class=\"modal-title\">" . lang('top_players') . " - " . lang('play_time') . "</h4><button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button></div><div class=\"modal-body\">";
@@ -435,7 +469,6 @@ require_once 'header.php'; ?>
                             }
                             echo "</div><div class=\"modal-footer\"><button type=\"button\" class=\"btn btn-danger\" data-dismiss=\"modal\">" . lang('close') . "</button></div></div></div></div>";
                             $i++;
-                            echo "<hr>";
                         }
                         ?>
                     </div>
@@ -451,42 +484,4 @@ require_once 'header.php'; ?>
         </div>
     </div>
 </div>
-
-<?php if(!empty(get_config('supported_langs'))) { ?>
-<!-- Language Modal -->
-<div class="modal" id="lang-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title"><?php elang('change_lang_head'); ?></h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form action="" method="post">
-                    <div class="form-group">
-                        <label for="lang"><?php elang('change_lang_form_head'); ?></label>
-                        <select class="form-control" id="langchange" name="langchange">
-                            <?php
-                                $supported_langs = get_config('supported_langs');
-                                foreach($supported_langs as $val => $lang) {
-                                    echo '<option value="' . $val . '">' . $lang . '</option>';
-                                }
-                            ?>
-                        </select>
-                    </div>
-                    <input name="langchangever" type="hidden" value="langchanger">
-                    <button type="submit" class="btn btn-primary"><?php elang('change_lang_sub'); ?></button>
-                </form>
-            </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<?php } ?>
-
 <?php require_once 'footer.php'; ?>
