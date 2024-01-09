@@ -1,4 +1,4 @@
 .DS_Store
 .idea
 /application/config/config.php
-/template/light/tpl
+/template
